@@ -23,10 +23,17 @@ studentName=[]
 studentAge=[]
 studentHouse=[]
 studentReaction=[]
+saturnTotal = 0
+marsTotal = 0
+averageReactionSaturn = 0
+averageReactionMars = 0
+saturnCount = 0
+marsCount = 0
+
 
 #Assume a sample of 3 students for testing purposes, to be updated to 30
 #as an appropriate sample size.
-for i in range(3):
+for i in range(2):
     name = str(input("Please input the name of the student"))
     studentName.append(name)
     while True:
@@ -43,7 +50,8 @@ for i in range(3):
     while True:
         try:
             house = str(input("Please enter the house of the student"))
-            if house == "Saturn" or house == "saturn" or house == "Mars" or house == "mars":
+            house.lower()
+            if house == "saturn" or house == "mars":
                 studentHouse.append(house)
                 break
             else:
@@ -51,18 +59,32 @@ for i in range(3):
 
         except ValueError:
             print("Totally inacceptable input")
-'''
+
     while True:
         try:
             reaction = int(input("Please enter the reaction time of the student"))
-            if house == "Saturn" or house == "saturn" or house == "Mars" or house == "mars":
-                studentHouse.append(house)
-                break
-            else:
-                print("That is not a valid house, please re-enter your choice.")
-
+            studentReaction.append(reaction)
+            break
+            
         except ValueError:
             print("Totally inacceptable input")
-'''
+
 
 #TASK 2 - Output School Based statistics
+#Output the average reaction time for a house
+for i in range(len(studentHouse)):
+    if studentHouse[i] == "saturn":
+        saturnTotal = saturnTotal + int(studentReaction[i])
+        saturnCount += 1
+    if studentHouse[i] == "mars":
+        marsTotal = marsTotal + int(studentReaction[i])
+        marsCount += 1
+
+
+if saturnCount>0:
+    averageReactionSaturn = saturnTotal/saturnCount
+    print("\nThe average reaction of Saturn House is: " , averageReactionSaturn)
+if marsCount>0:
+    averageReactionMars = marsTotal/marsCount
+    print("\nThe average reaction of Mars House is: ", averageReactionMars)
+
