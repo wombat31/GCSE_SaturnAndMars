@@ -19,37 +19,43 @@
 #students. Inputs must be validated on entry and any invalid inputs rejected.
 
 #Set up the variables
-studentName=[]
-studentAge=[]
-studentHouse=[]
-studentReaction=[]
+studentName=[]#Array to hold names
+studentAge=[]#Array to hold ages
+studentHouse=[]#array to hold houses
+studentReaction=[]#Array to hold reaction times
 saturnTotal = 0
 marsTotal = 0
 averageReactionSaturn = 0
 averageReactionMars = 0
 saturnCount = 0
 marsCount = 0
-
+running = True # controls the dynamic loop for individual searches
+dataTotal = 0
+dataCount = 0
+dataAverage = 0
+slowestReaction = 1000000 # large number to ensure reaction time is always less
+slowestStudent = ""
+agesAvailable = [] #Temporary array to inform ages in dataset after invalid entry
 
 #Assume a sample of 3 students for testing purposes, to be updated to 30
 #as an appropriate sample size.
-for i in range(2):
-    name = str(input("Please input the name of the student"))
+for i in range(3):
+    name = str(input("\nPlease input the name of the student"))
     studentName.append(name)
     while True:
         try:
-            age= int(input("Please enter the age of the student"))
+            age= int(input("\nPlease enter the age of the student"))
             if age >=12 and age <=16:
                 studentAge.append(age)
                 break
             else:
-                print("The age is invalid, please input the age again")
+                print("\nThe age is invalid, please input the age again")
 
         except ValueError:
             print("Totally inacceptable input, Try again")
     while True:
         try:
-            house = str(input("Please enter the house of the student"))
+            house = str(input("\nPlease enter the house of the student"))
             house.lower()
             if house == "saturn" or house == "mars":
                 studentHouse.append(house)
@@ -62,7 +68,7 @@ for i in range(2):
 
     while True:
         try:
-            reaction = int(input("Please enter the reaction time of the student"))
+            reaction = int(input("\nPlease enter the reaction time of the student"))
             studentReaction.append(reaction)
             break
             
@@ -88,3 +94,60 @@ if marsCount>0:
     averageReactionMars = marsTotal/marsCount
     print("\nThe average reaction of Mars House is: ", averageReactionMars)
 
+#TASK 3 – Output statistics based on user input 
+#Extend your program to prompt users to input a 
+#specific age and school house. Using only records 
+#that match the criteria input, the program should 
+#identify, calculate and output: • The average 
+#reaction time • The slowest reaction time The 
+#output should include a suitable message for 
+#each of the reaction times identified.
+
+while running:
+    dataRequired = str(input("\nDo you want to run another specific data Search (y/n)"))
+    if dataRequired == "n":
+        running = False
+    else:
+        while True:
+            try:
+                houseRequired = str(input("\nWhich house do you want for calculations?"))
+                if houseRequired in studentHouse:
+                    break
+                else:
+                    print("\nThat house is not in the dataset")
+            except ValueError:
+                print("That is not a valid input")
+
+        while True:
+            try:
+                ageRequired=int(input("\nWhat age do you want to calculate?"))
+                if ageRequired in studentAge:       
+                    for i in range(len(studentHouse)):
+                        if studentHouse[i] == houseRequired and studentAge[i]== ageRequired:
+                            dataTotal = dataTotal + studentReaction[i]
+                            dataCount = dataCount + 1
+                            if studentReaction[i]< slowestReaction:
+                                slowestReaction = studentReaction[i]
+                                slowestStudent = studentName[i]
+                    break
+                else:
+                    print("That age is not in the dataset")
+            except ValueError:
+                print("That is not a valid input")
+        
+        if dataCount>0:
+            dataAverage = dataTotal/dataCount
+            print("\nThe average reaction time for ",houseRequired, ageRequired, " year olds is ", dataAverage )
+            print("\nThe slowest reaction time for ",houseRequired, ageRequired, " year olds is ", slowestReaction, " being ",slowestStudent)
+        else:
+            print("\nThere are no combinations of that age and house!")
+            for y in range(len(studentHouse)):
+                if studentHouse[y] == houseRequired:
+                    agesAvailable.append(studentAge[y])
+            print("Ages available in ", houseRequired," are ", agesAvailable)
+
+        dataCount = 0
+        dataTotal = 0
+        slowestReaction = 1000000
+        agesAvailable = []
+print("\nThank you for using Mr W's reaction Time app ")
