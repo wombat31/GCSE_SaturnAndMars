@@ -35,7 +35,7 @@ dataCount = 0
 dataAverage = 0
 slowestReaction = 0
 slowestStudent = ""
-agesAvailable = [] #Temporary array to inform ages in dataset after invalid entry
+agesAvailable = [] #Temporary array to inform ages in dataset after invalid entrygesAvailableTemp = []
 
 #Assume a sample of 3 students for testing purposes, to be updated to 30
 #as an appropriate sample size.
@@ -144,10 +144,12 @@ while running:
             for y in range(len(studentHouse)):
                 if studentHouse[y] == houseRequired:
                     agesAvailable.append(studentAge[y])
+                    
             print("Ages available in ", houseRequired," are ", agesAvailable)
 
         dataCount = 0
         dataTotal = 0
         slowestReaction = 0
         agesAvailable = []
+        
 print("\nThank you for using Mr W's reaction Time app ")
