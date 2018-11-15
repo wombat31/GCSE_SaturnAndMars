@@ -33,7 +33,7 @@ running = True # controls the dynamic loop for individual searches
 dataTotal = 0
 dataCount = 0
 dataAverage = 0
-slowestReaction = 1000000 # large number to ensure reaction time is always less
+slowestReaction = 0
 slowestStudent = ""
 agesAvailable = [] #Temporary array to inform ages in dataset after invalid entry
 
@@ -126,7 +126,7 @@ while running:
                         if studentHouse[i] == houseRequired and studentAge[i]== ageRequired:
                             dataTotal = dataTotal + studentReaction[i]
                             dataCount = dataCount + 1
-                            if studentReaction[i]< slowestReaction:
+                            if studentReaction[i]> slowestReaction:
                                 slowestReaction = studentReaction[i]
                                 slowestStudent = studentName[i]
                     break
@@ -148,6 +148,6 @@ while running:
 
         dataCount = 0
         dataTotal = 0
-        slowestReaction = 1000000
+        slowestReaction = 0
         agesAvailable = []
 print("\nThank you for using Mr W's reaction Time app ")
